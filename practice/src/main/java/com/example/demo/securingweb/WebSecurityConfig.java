@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.demo.repository.SigninRepository;
 import com.example.demo.service.UserDetailsServiceImpl;
@@ -43,7 +42,12 @@ public class WebSecurityConfig {
       )
       .logout(logout ->
         logout
-          .logoutRequestMatcher(new AntPathRequestMatcher("/admin/signout"))
+          .logoutUrl("/admin/signout")
+          .logoutSuccessUrl("/admin/signin?logout")
+          .invalidateHttpSession(true)
+          .deleteCookies("JSESSIONID")
+          .permitAll()
+          //.logoutRequestMatcher(new AntPathRequestMatcher("/admin/signout"))
       );
     
     return http.build();

@@ -7,6 +7,7 @@
 <body>
   <h1>お問い合わせ編集</h1>
   <form th:object="${contact}" th:action="@{/admin/contacts/update}" method="post">
+    <p>お問い合わせID:<input type="text" th:field="*{id}" readonly></p>
     <p>姓:<input type="text" th:field="*{lastName}"></p>
     <p>名:<input type="text" th:field="*{firstName}"></p>
     <p>メールアドレス:<input type="text" th:field="*{email}"></p>
@@ -16,7 +17,16 @@
     <p>建物名:<input type="text" th:field="*{buildingName}"></p>
     <p>お問い合わせ種別:<input type="text" th:field="*{contactType}"></p>
     <p>内容:<input type="text" th:field="*{body}"></p>
+    <p>作成日時:<input type="text" th:field="*{createdAt}" readonly></p>
+    <p>更新日時:<input type="text" th:field="*{updatedAt}" readonly></p>
     <input type="submit" value="保存">
+  </form>
+  <form th:object="${contact}" th:action="@{/admin/contacts/destroy}" method="post" onsubmit="return confirm('本当に削除しますか？');">
+    <input type="hidden" th:field="*{id}">
+  <button type="submit">削除</button>
+  </form>
+  <form th:action="@{/admin/signout}" method="post">
+    <button type="submit">ログアウト</button>
   </form>
 </body>
 </html>

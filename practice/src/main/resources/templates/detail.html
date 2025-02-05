@@ -21,5 +21,9 @@
   <p>更新日時:<span th:text="${contact.updatedAt}"></span></p>
 </div>
 <p><a th:href="@{/admin/contacts/{id}/edit(id=${contact.id})}">編集</a></p>
+<p><a th:href="@{/admin/contacts}">戻る</a></p>
+<form th:action="@{/admin/signout}" method="post">
+  <button type="submit">ログアウト</button>
+</form>
 </body>
 </html>

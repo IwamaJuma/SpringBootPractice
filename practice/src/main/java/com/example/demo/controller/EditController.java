@@ -26,7 +26,13 @@ public class EditController {
   @PostMapping("/admin/contacts/update")
   public String update(@ModelAttribute Contact contact) {
     contactService.updateContact(contact);
-    return "redirect:/admin/contacts/" + contact.getId();
+    return "redirect:/admin/contacts" + contact.getId();
+  }
+  
+  @PostMapping("/admin/contacts/destroy")
+  public String destroy(@ModelAttribute Contact contact) {
+    contactService.destroyContact(contact.getId());
+    return "redirect:/admin/contacts";
   }
 
 }

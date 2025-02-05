@@ -37,7 +37,10 @@ public class ContactServiceImp implements ContactService {
 
   public void updateContact(Contact contact) {
     contactRepository.saveAndFlush(contact);
-    
+  }
+
+  public void destroyContact(Long id) {
+    contactRepository.deleteById(id);
   }
   
 }
