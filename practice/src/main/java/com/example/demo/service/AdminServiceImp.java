@@ -3,7 +3,7 @@ package com.example.demo.service;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Admin;
@@ -15,8 +15,7 @@ public class AdminServiceImp implements AdminService {
   @Autowired
   private AdminRepository adminRepository;
   
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
   @Override
   @Transactional
@@ -26,7 +25,7 @@ public class AdminServiceImp implements AdminService {
     admin.setLastName(adminForm.getLastName());
     admin.setFirstName(adminForm.getFirstName());
     admin.setEmail(adminForm.getEmail());
-    admin.setPassword(passwordEncoder.encode(adminForm.getPassword()));
+    admin.setPassword(bCryptPasswordEncoder.encode(adminForm.getPassword()));
     
     adminRepository.save(admin);
 

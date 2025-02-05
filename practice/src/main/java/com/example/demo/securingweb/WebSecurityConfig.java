@@ -7,23 +7,23 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.example.demo.repository.SigninRepository;
 import com.example.demo.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
   
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
-  
-  @Bean
-  PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+  private SigninRepository signin;
+  private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+  private UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl(signin);
+
+    WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
   
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,7 +38,7 @@ public class WebSecurityConfig {
           .loginPage("/admin/signin")
           .usernameParameter("email")
           .passwordParameter("password")
-          .successForwardUrl("/admin/contacts")
+          .defaultSuccessUrl("/admin/contacts")
           .permitAll()
       )
       .logout(logout ->
@@ -51,7 +51,7 @@ public class WebSecurityConfig {
   
   @Autowired
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
   }
 
 }

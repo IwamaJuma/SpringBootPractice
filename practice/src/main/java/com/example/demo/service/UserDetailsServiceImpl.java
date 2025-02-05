@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Admin;
@@ -20,9 +20,15 @@ import com.example.demo.repository.SigninRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   
-  @Autowired
   private SigninRepository signin;
-
+  //private BCryptPasswordEncoder encoder;
+  
+  @Autowired
+  public UserDetailsServiceImpl(@Lazy SigninRepository signin) {
+    this.signin = signin;
+    //this.encoder = encoder;
+  }
+  
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     
@@ -36,11 +42,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     GrantedAuthority authority = new SimpleGrantedAuthority("ADMIN");
     grantList.add(authority);
     
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    //encoder = new BCryptPasswordEncoder();
     
-    UserDetails userDetails = (UserDetails)new User(admin.getEmail(),encoder.encode(admin.getPassword()),grantList);
+    UserDetails userDetails = (UserDetails)new User(admin.getEmail(),admin.getPassword(),grantList);
     
     return userDetails;
   }
+
 
 }
