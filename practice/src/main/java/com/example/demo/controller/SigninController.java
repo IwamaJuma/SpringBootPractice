@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,10 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Contact;
+import com.example.demo.repository.ContactRepository;
+
 @Controller
 public class SigninController {
   
   private AuthenticationManager authenticationManager;
+  @Autowired
+  private ContactRepository contactRepository;
   
   
   @GetMapping("/admin/signin")
@@ -36,7 +44,9 @@ public class SigninController {
   }
   
   @GetMapping("/admin/contacts")
-  public String contacts() {
+  public String contacts(Model model) {
+    List<Contact> contacts = contactRepository.findAll();
+    model.addAttribute("contacts", contacts);
     return "contacts";
   }
   
