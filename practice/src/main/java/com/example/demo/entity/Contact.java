@@ -1,11 +1,15 @@
 package com.example.demo.entity;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
@@ -45,4 +49,10 @@ public class Contact {
   @Column(name="body", nullable = false)
   private String body;
   
+  @Column(updatable = false)
+  private Timestamp createdAt;
+  
+  @UpdateTimestamp
+  private Timestamp updatedAt;
+
 }

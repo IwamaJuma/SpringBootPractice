@@ -29,4 +29,18 @@ public class ContactServiceImp implements ContactService {
     
     contactRepository.save(contact);
   }
+  
+  @Override
+  public Contact findById(Long id) {
+    return contactRepository.findById(id).orElse(null);
+  }
+
+  public void updateContact(Contact contact) {
+    contactRepository.saveAndFlush(contact);
+  }
+
+  public void destroyContact(Long id) {
+    contactRepository.deleteById(id);
+  }
+  
 }
