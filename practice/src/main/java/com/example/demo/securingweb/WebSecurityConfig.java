@@ -31,7 +31,7 @@ public class WebSecurityConfig {
     http
       .authorizeHttpRequests(authorizeRequests ->
         authorizeRequests
-          .requestMatchers("/admin/signin","/admin/signup").permitAll()
+          .requestMatchers("/admin/signin","/admin/signup","/contact","/contact/confirm","/contact/complete").permitAll()
           .anyRequest().authenticated()
       )
      .formLogin(formLogin ->
