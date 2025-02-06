@@ -44,7 +44,9 @@ public class ContactForAdminController {
   @GetMapping("/admin/contacts/{id}/edit")
   public String edit(@PathVariable("id") Long id, Model model) {
     Contact contact = contactService.findById(id);
-    model.addAttribute("contact", contact);
+    ContactForm contactForm = contactService.ContactMapper(contact);
+    model.addAttribute("contactForm", contactForm);
+    
     return "edit";
   }
   
@@ -79,8 +81,8 @@ public class ContactForAdminController {
   }
   
   @PostMapping("/admin/contacts/destroy")
-  public String destroy(@ModelAttribute Contact contact) {
-    contactService.destroy(contact.getId());
+  public String destroy(@ModelAttribute ContactForm contactForm) {
+    contactService.destroy(contactForm.getId());
     return "redirect:/admin/contacts";
   }
 }

@@ -61,4 +61,22 @@ public class ContactServiceImp implements ContactService {
     contactRepository.deleteById(id);
   }
   
+  public ContactForm ContactMapper(Contact contact) {
+    ContactForm form = new ContactForm();
+    form.setId(contact.getId());
+    form.setLastName(contact.getLastName());
+    form.setFirstName(contact.getFirstName());
+    form.setEmail(contact.getEmail());
+    form.setPhone(contact.getPhone());
+    form.setZipCode(contact.getZipCode());
+    form.setAddress(contact.getAddress());
+    form.setBuildingName(contact.getBuildingName());
+    form.setContactType(contact.getContactType());
+    form.setBody(contact.getBody());
+    form.setCreatedAt(contact.getCreatedAt());
+    form.setUpdatedAt(contact.getUpdatedAt());
+        
+    return form;
+  }
+  
 }
