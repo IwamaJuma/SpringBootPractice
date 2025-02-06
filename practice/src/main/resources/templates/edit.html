@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>edit</title>
+</head>
+<body>
+  <h1>お問い合わせ編集</h1>
+  <form th:object="${contact}" th:action="@{/admin/contacts/confirm}" method="post">
+    <p>お問い合わせID:<input type="text" th:field="*{id}" readonly></p>
+    <p>姓:<input type="text" th:field="*{lastName}"></p>
+    <p>名:<input type="text" th:field="*{firstName}"></p>
+    <p>メールアドレス:<input type="text" th:field="*{email}"></p>
+    <p>電話番号:<input type="text" th:field="*{phone}"></p>
+    <p>郵便番号:<input type="text" th:field="*{zipCode}"></p>
+    <p>住所:<input type="text" th:field="*{address}"></p>
+    <p>建物名:<input type="text" th:field="*{buildingName}"></p>
+    <p>お問い合わせ種別:<input type="text" th:field="*{contactType}"></p>
+    <p>内容:<input type="text" th:field="*{body}"></p>
+    <p>作成日時:<input type="text" th:field="*{createdAt}" readonly></p>
+    <p>更新日時:<input type="text" th:field="*{updatedAt}" readonly></p>
+    <input type="submit" value="確認">
+  </form>
+  <form th:object="${contact}" th:action="@{/admin/contacts/destroy}" method="post" onsubmit="return confirm('本当に削除しますか？');">
+    <input type="hidden" th:field="*{id}">
+  <button type="submit">削除</button>
+  </form>
+  <form th:action="@{/admin/signout}" method="post">
+    <button type="submit">ログアウト</button>
+  </form>
+</body>
+</html>

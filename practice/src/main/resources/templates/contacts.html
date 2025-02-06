@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Contacts</title>
+</head>
+<body>
+  <h1>Contacts</h1>
+  <table>
+    <tr>
+      <th>お問い合わせID</th>
+      <th>姓</th>
+      <th>名</th>
+      <th>お問い合わせ種別</th>
+      <th>作成日時</th>
+      <th>更新日時</th>
+    </tr>
+    <tbody>
+      <tr th:each="contact: ${contacts}">
+        <td th:text="${contact.id}"></td>
+        <td th:text="${contact.lastName}"></td>
+        <td th:text="${contact.firstName}"></td>
+        <td th:text="${contact.contactType}"></td>
+        <td th:text="${contact.createdAt}"></td>
+        <td th:text="${contact.updatedAt}"></td>
+        <td><a th:href="@{/admin/contacts/{id}(id=${contact.id})}">詳細</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <form th:action="@{/admin/signout}" method="post">
+    <button type="submit">ログアウト</button>
+  </form>
+</body>
+</html>
