@@ -16,8 +16,10 @@ import com.example.demo.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig {
   
+  @Autowired
   private SigninRepository signin;
   private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+  @Autowired
   private UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl(signin);
 
     WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
@@ -32,14 +34,14 @@ public class WebSecurityConfig {
           .requestMatchers("/admin/signin","/admin/signup").permitAll()
           .anyRequest().authenticated()
       )
-      .formLogin(formLogin ->
+     .formLogin(formLogin ->
         formLogin
           .loginPage("/admin/signin")
           .usernameParameter("email")
           .passwordParameter("password")
           .defaultSuccessUrl("/admin/contacts")
           .permitAll()
-      )
+      ) 
       .logout(logout ->
         logout
           .logoutUrl("/admin/signout")
@@ -47,7 +49,6 @@ public class WebSecurityConfig {
           .invalidateHttpSession(true)
           .deleteCookies("JSESSIONID")
           .permitAll()
-          //.logoutRequestMatcher(new AntPathRequestMatcher("/admin/signout"))
       );
     
     return http.build();

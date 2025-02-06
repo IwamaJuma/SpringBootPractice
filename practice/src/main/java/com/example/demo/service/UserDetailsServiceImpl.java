@@ -21,12 +21,10 @@ import com.example.demo.repository.SigninRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
   
   private SigninRepository signin;
-  //private BCryptPasswordEncoder encoder;
   
   @Autowired
   public UserDetailsServiceImpl(@Lazy SigninRepository signin) {
     this.signin = signin;
-    //this.encoder = encoder;
   }
   
   @Override
@@ -41,8 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
     GrantedAuthority authority = new SimpleGrantedAuthority("ADMIN");
     grantList.add(authority);
-    
-    //encoder = new BCryptPasswordEncoder();
     
     UserDetails userDetails = (UserDetails)new User(admin.getEmail(),admin.getPassword(),grantList);
     
