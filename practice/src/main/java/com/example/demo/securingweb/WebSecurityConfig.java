@@ -40,6 +40,7 @@ public class WebSecurityConfig {
           .usernameParameter("email")
           .passwordParameter("password")
           .defaultSuccessUrl("/admin/contacts")
+          .failureUrl("/admin/signin?error")
           .permitAll()
       ) 
       .logout(logout ->
