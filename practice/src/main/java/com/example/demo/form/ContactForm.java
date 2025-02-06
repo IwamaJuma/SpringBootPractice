@@ -1,6 +1,7 @@
 package com.example.demo.form;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,9 @@ import lombok.Data;
 
 @Data
 public class ContactForm implements Serializable{
+  //受け取るだけ
+  private Long id;
+  
   @NotBlank
   private String lastName;
   
@@ -40,5 +44,12 @@ public class ContactForm implements Serializable{
   
   @NotBlank
   private String body;
+  
+  //受け取るだけ
+  private Timestamp createdAt;
+  
+  //受け取るだけ
+  private Timestamp updatedAt;
+  
 
 }
